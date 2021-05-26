@@ -7,7 +7,7 @@ import threading
 #subprocess.call(['./cliente.py'])
 
 def sendFrame(filename):
-    print(filename + "emvboemdp")
+    print(filename + "**************************************")
     ruta= "python servidor.py " + str(filename) +" 8001"
     print("RUTA +++++++++++++++ "+ ruta)
     os.system(ruta)

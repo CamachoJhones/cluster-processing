@@ -28,14 +28,14 @@ class Servidor:
                 
 
             else:
-                file_name2="./serverFrames/"+ file_name
+                write_name="./serverFrames/"+ file_name
 
                 #os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
                 val=os.getcwd()
                 print("RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   " + file_name2)
                 write_name = './clusterFrames/from_server '+file_name
 
-            self.s.send(file_name2.encode())
+            self.s.send(write_name.encode())
             confirmation = self.s.recv(1024)
             if confirmation.decode() == "file-doesn't-exist":
                 print("File doesn't exist on server.")

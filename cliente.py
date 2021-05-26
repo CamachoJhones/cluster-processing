@@ -21,7 +21,15 @@ class Cliente:
             threading.Thread(target=self.handle_client,args=(c,addr,)).start()
     def handle_client(self,c,addr):
         data = c.recv(1024).decode()  
-        print("IMRPIMIENDO DATA ------  " + data) 
+        caracter,file = data.split("-")
+        if(caracter == "/x11"):
+            print("Es un video")
+        elif(caracter == "/x12"):
+            print("Es un frame")
+            # change dir a /serverFrames
+        else:
+            print("Ni es video ni es frame")
+
         if not os.path.exists(data):
             c.send("file-doesn't-exist".encode())
         else:

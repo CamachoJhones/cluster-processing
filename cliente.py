@@ -20,8 +20,11 @@ class Cliente:
             print(c)           
             threading.Thread(target=self.handle_client,args=(c,addr,)).start()
     def handle_client(self,c,addr):
-        data = c.recv(1024).decode()  
-        caracter,file = data.split("-")
+        data = c.recv(1024).decode() 
+        print("Cosas que trai el data " + data) 
+        caracter,arch = data.split('-')
+        print("Caracter>> " + caracter )
+        print("Caracter>> " + arch )
         if(caracter == "/x11"):
             print("Es un video")
         elif(caracter == "/x12"):
@@ -30,17 +33,17 @@ class Cliente:
         else:
             print("Ni es video ni es frame")
 
-        if not os.path.exists(data):
+        if not os.path.exists(arch):
             c.send("file-doesn't-exist".encode())
         else:
             c.send("file-exists".encode())
-            print('Sending',data)
-            if data != '':
-                file = open(data,'rb')
-                data = file.read(1024)
-                while data:
-                    c.send(data)
-                    data = file.read(1024)
+            print('Sending',arch)
+            if arch != '':
+                file = open(arch,'rb')
+                arch = file.read(1024)
+                while arch:
+                    c.send(arch)
+                    arch = file.read(1024)
                 c.shutdown(socket.SHUT_RDWR)
                 c.close()
 cliente =Cliente()

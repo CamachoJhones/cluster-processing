@@ -1,0 +1,11 @@
+1.- Echar a jalar el Master para que el proceso de sacar el frame a carpeta clusterFrame 
+
+2.- Convertir frame de clusterFrame a B&N con el otro archivo.py 
+
+3.- Regresar de clusterFrames a server
+
+4.- Construir video con frames recibidos 
+
+5.- Regresar video rearmado a cliente 
+
+6.- Adaptarlo a los 3 clusters

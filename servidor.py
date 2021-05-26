@@ -25,7 +25,7 @@ class Servidor:
                 val=os.getcwd()
                 print("RUTA DIRECTORIO 1 -*/-*/-*/-*/-*/   " + val)
                 write_name = 'from_server '+file_name
-                
+                file_name = "/x11"+file_name
 
             else:
                 write_name="./serverFrames/"+ file_name
@@ -34,8 +34,8 @@ class Servidor:
                 val=os.getcwd()
                 print("RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   " + file_name)
                 write_name = './clusterFrames/from_server '+file_name
+                file_name = "/x12"+file_name
 
-            file_name = "/x11"+file_name
             self.s.send(file_name.encode())
             confirmation = self.s.recv(1024)
             if confirmation.decode() == "file-doesn't-exist":

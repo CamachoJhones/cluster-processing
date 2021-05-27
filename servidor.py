@@ -1,93 +1,69 @@
 import socket
-import os
-import argparse
-import sys
 import threading
-target_port = sys.argv[2]
+import os
+import sys
 
 
-def filtro(file_name, cluster_number):
-    print("FILE NAME FILTRO " + file_name)
-    os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master")
-    print("python clusterFilter.py " + file_name + " " + cluster_number)
-    os.system("python clusterFilter.py " + file_name + " " + cluster_number)
 
-
-class Servidor:
+class Cliente:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.connect_to_server()
-    def connect_to_server(self):
-        self.target_ip = "LocalHost"
-        #self.target_port = 8000
-        self.s.connect((self.target_ip,int(target_port)))
-        self.main()
-    def reconnect(self):
-        self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.s.connect((self.target_ip,int(target_port)))
-    def main(self):
-        file_name = sys.argv[1]
+        self.accept_connections()  
+    def accept_connections(self):
+        ip = "LocalHost"
+        #port = 8000
+
+        port = int(sys.argv[1])
+        print("Antes del BIND <<<<<<<<<<<<<<---------------  ")
+        self.s.bind((ip,port))
+        self.s.listen(100)
+        print('Running on IP: '+ip)
+        print('Running on port: '+str(port))
         while 1:
-            print("FAIL NEIM */*/*/*/ " + file_name)
-            if target_port=="8000":
-                #val=os.getcwd()
-                #print("RUTA DIRECTORIO 1 -*/-*/-*/-*/-*/   " + val)
-                write_name = 'from_server_'+file_name
-                file_name = "/x11-" + file_name 
-                print("Nombre File_name_" + file_name)
+            c, addr = self.s.accept()
+            print(c)           
+            threading.Thread(target=self.handle_client,args=(c,addr,)).start()
+    def handle_client(self,c,addr):
+        data = c.recv(1024).decode() 
+        print("Cosas que trai el data " + data) 
+        caracter,arch = data.split('-')
+        file_name=arch
+        print("Caracter>> " + caracter )
+        print("Caracter>> " + arch )
+        if(caracter == "/x11"):
+            print("Es un video")
+            banderaFrame=False
 
-            elif(target_port=="8001"):
-                write_name="./serverFrames/"+ file_name
-                #os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
-                #val=os.getcwd()
-                #print ("Ruta actual " + val)
-                print("RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   " + file_name)
-                write_name = './clusterFrames/from_server_'+file_name
-                file_name = "/x12-" + file_name 
-                print("Nombre despues de File NAME 8001 " + file_name)
+        elif(caracter == "/x12"):
+            print("Es el frame")
+            os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
+            # change dir a /serverFrames
+            banderaFrame=True
 
-            elif(target_port=="8002"):
-                write_name="./clusterFilteredFrames/"+ file_name
-                #os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
-                #val=os.getcwd()
-                #print ("Ruta actual " + val)
-                print("RUTA DIRECTORIO 3 -*/-*/-*/-*/-*/   " + file_name)
-                write_name = './serverFilteredFrames/'+file_name #AQUI CAMBIO nombre FRAMES!!!!!!!!!!!!!
-                file_name = "/x13-" + file_name 
-                print("Nombre despues de File NAME 8002 " + file_name)
-            self.s.send(file_name.encode())
-            confirmation = self.s.recv(1024)
-            if confirmation.decode() == "file-doesn't-exist":
-                print("File doesn't exist on server.")
-                self.s.shutdown(socket.SHUT_RDWR)
-                self.s.close()
-                self.reconnect()
-            else:        
-                if os.path.exists(write_name): os.remove(write_name)
+        elif(caracter=="/x13"):
+            print("Es el frame que viene desde Cluster ")
+            os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\clusterFilteredFrames")
+            # change dir a /serverFrames
+            banderaFrame=True
+        else:
+            print("Ni es video ni es frame ni sabemos de donde viene")
+            banderaFrame=False
 
-                with open(write_name,'wb') as file:
-                    while 1:
-                        data = self.s.recv(1024)
-                        if not data:
-                            break
-                        file.write(data)
-                print(file_name,'successfully downloaded.')
-                if(write_name.find("png")!= -1):
-                    img_name = write_name[16:]
-                    print("Imagen a FILTRAR "+img_name)
-                    #subprocess.call('start /wait python cliente.py 8001', shell=True)
-                    #print("python clusterFilter.py " + file_name)
-                    
-                    t=threading.Thread(target=filtro(img_name, "2"))
-                    t.start()
-                else:
-                    pass
+        if not os.path.exists(arch):
+            c.send("file-doesn't-exist".encode())
+        else:
+            c.send("file-exists".encode())
+            print('Sending ',arch)
+            if arch != '':
+                file = open(arch,'rb')
+                arch = file.read(1024)
+                while arch:
+                    c.send(arch)
+                    arch = file.read(1024)
+                c.shutdown(socket.SHUT_RDWR)
+                c.close()
+                file.close()
 
-                self.s.shutdown(socket.SHUT_RDWR)
-                self.s.close()
-                #self.reconnect()  
-                break
+                
 
-        exit()               
-servidor = Servidor()
-
+cliente =Cliente()

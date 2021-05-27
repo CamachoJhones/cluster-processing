@@ -2,7 +2,16 @@ import socket
 import os
 import argparse
 import sys
+import threading
 target_port = sys.argv[2]
+
+
+def filtro(file_name, cluster_number):
+    print("FILE NAME FILTRO " + file_name)
+    os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master")
+    print("python clusterFilter.py " + file_name + " " + cluster_number)
+    os.system("python clusterFilter.py " + file_name + " " + cluster_number)
+
 class Servidor:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -32,7 +41,7 @@ class Servidor:
                 #val=os.getcwd()
                 #print ("Ruta actual " + val)
                 print("RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   " + file_name)
-                write_name = './clusterFrames/from_server '+file_name
+                write_name = './clusterFrames/from_server_'+file_name
                 file_name = "/x12-" + file_name 
                 print("Nombre despues de File NAME 8001 " + file_name)
             self.s.send(file_name.encode())
@@ -52,9 +61,22 @@ class Servidor:
                             break
                         file.write(data)
                 print(file_name,'successfully downloaded.')
+                if(write_name.find("png")!= -1):
+                    img_name = write_name[16:]
+                    print("Imagen a FILTRAR "+img_name)
+                    #subprocess.call('start /wait python cliente.py 8001', shell=True)
+                    #print("python clusterFilter.py " + file_name)
+                    
+                    t=threading.Thread(target=filtro(img_name, "2"))
+                    t.start()
+                else:
+                    pass
+
                 self.s.shutdown(socket.SHUT_RDWR)
                 self.s.close()
-                #self.reconnect() 
+                #self.reconnect()  
                 break
+
         exit()               
 servidor = Servidor()
+

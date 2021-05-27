@@ -2,10 +2,7 @@ import socket
 import os
 import argparse
 import sys
-
-
 target_port = sys.argv[2]
-
 class Servidor:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -37,8 +34,7 @@ class Servidor:
                 print("RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   " + file_name)
                 write_name = './clusterFrames/from_server '+file_name
                 file_name = "/x12-" + file_name 
-                print("Nombre despues de File NAME 8001" + file_name)
-
+                print("Nombre despues de File NAME 8001 " + file_name)
             self.s.send(file_name.encode())
             confirmation = self.s.recv(1024)
             if confirmation.decode() == "file-doesn't-exist":

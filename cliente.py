@@ -13,7 +13,6 @@ class Cliente:
 
         port = int(sys.argv[1])
         print("Antes del BIND <<<<<<<<<<<<<<---------------  ")
-        time.sleep(3)
         self.s.bind((ip,port))
         self.s.listen(100)
         print('Running on IP: '+ip)

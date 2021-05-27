@@ -15,10 +15,12 @@ def sendFrame(filename):
 def processFrames():
     t=threading.Thread(target=rutina)
     t.start()
+    time.sleep(3)
     for filename in os.listdir('./serverFrames'):
         sendFrame(filename)
 
 def rutina():
+    
     print("Entramos a RUTINA")
     #os.system("python cliente.py 8001")
     print("Iniciando CLUSTER 1 ")

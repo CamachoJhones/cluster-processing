@@ -3,8 +3,6 @@ import threading
 import os
 import sys
 
-
-
 class Cliente:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)

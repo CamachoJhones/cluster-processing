@@ -1,5 +1,3 @@
-
-
 import socket
 import os
 import argparse
@@ -92,4 +90,5 @@ class Servidor:
 
         exit()               
 servidor = Servidor()
+
 

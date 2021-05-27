@@ -9,7 +9,7 @@ import time
 
 def sendFrame(filename, puerto):
     print(filename + "**************************************")
-    ruta= "python servidor.py " + str(filename) +" "+ puerto
+    ruta= "python cliente.py " + str(filename) +" "+ puerto
     print("RUTA +++++++++++++++ "+ ruta)
     os.system(ruta)
 def processFrames(carpetaProcess):

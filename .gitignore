@@ -6,3 +6,7 @@ clusterFrames/
 serverFrames/
 
 clusterFilteredFrames/
+
+serverFilteredFrames/
+
+clientFilteredVideo/

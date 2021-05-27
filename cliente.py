@@ -2,7 +2,7 @@ import socket
 import threading
 import os
 import sys
-import time
+
 
 
 class Cliente:
@@ -40,8 +40,13 @@ class Cliente:
             # change dir a /serverFrames
             banderaFrame=True
 
+        elif(caracter=="/x13"):
+            print("Es el frame que viene desde Cluster ")
+            os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\clusterFilteredFrames")
+            # change dir a /serverFrames
+            banderaFrame=True
         else:
-            print("Ni es video ni es frame")
+            print("Ni es video ni es frame ni sabemos de donde viene")
             banderaFrame=False
 
         if not os.path.exists(arch):

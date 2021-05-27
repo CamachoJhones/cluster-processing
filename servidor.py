@@ -12,6 +12,7 @@ def filtro(file_name, cluster_number):
     print("python clusterFilter.py " + file_name + " " + cluster_number)
     os.system("python clusterFilter.py " + file_name + " " + cluster_number)
 
+
 class Servidor:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -35,7 +36,7 @@ class Servidor:
                 file_name = "/x11-" + file_name 
                 print("Nombre File_name_" + file_name)
 
-            else:
+            elif(target_port=="8001"):
                 write_name="./serverFrames/"+ file_name
                 #os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
                 #val=os.getcwd()
@@ -44,6 +45,16 @@ class Servidor:
                 write_name = './clusterFrames/from_server_'+file_name
                 file_name = "/x12-" + file_name 
                 print("Nombre despues de File NAME 8001 " + file_name)
+
+            elif(target_port=="8002"):
+                write_name="./clusterFilteredFrames/"+ file_name
+                #os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
+                #val=os.getcwd()
+                #print ("Ruta actual " + val)
+                print("RUTA DIRECTORIO 3 -*/-*/-*/-*/-*/   " + file_name)
+                write_name = './serverFilteredFrames/'+file_name #AQUI CAMBIO nombre FRAMES!!!!!!!!!!!!!
+                file_name = "/x13-" + file_name 
+                print("Nombre despues de File NAME 8002 " + file_name)
             self.s.send(file_name.encode())
             confirmation = self.s.recv(1024)
             if confirmation.decode() == "file-doesn't-exist":

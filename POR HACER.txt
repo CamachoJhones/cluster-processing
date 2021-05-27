@@ -9,3 +9,24 @@
 5.- Regresar video rearmado a cliente 
 
 6.- Adaptarlo a los 3 clusters
+
+
+
+
+
+******************************************************
+(Cuando 8001)
+Abrir al mismo tiempo puerto de regreso 8002 
+Regresar frames procesados por 8002
+Y recibir en serverFilteredFrames
+
+
+
+RUTA +++++++++++++++ python servidor.py frame0.png 8001                +
+FAIL NEIM */*/*/*/ frame0.png                                           +
+RUTA DIRECTORIO 2 -*/-*/-*/-*/-*/   frame0.png                          
+Nombre despues de File NAME 8001 /x12-frame0.png
+/x12-frame0.png successfully downloaded.
+
+
+

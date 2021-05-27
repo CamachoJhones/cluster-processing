@@ -11,6 +11,7 @@ while (cap.isOpened()):
     cv2.imwrite('frame' + str(img_index) + '.png', frame)
     print('frame' + str(img_index) + '.png')
     img_index += 1
+
 cap.release()
 cv2.destroyAllWindows()
-
+exit()

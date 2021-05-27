@@ -2,6 +2,7 @@ import socket
 import threading
 import os
 import sys
+import time
 class Cliente:
     def __init__(self):
         self.s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -11,6 +12,8 @@ class Cliente:
         #port = 8000
 
         port = int(sys.argv[1])
+        print("Antes del BIND <<<<<<<<<<<<<<---------------  ")
+        time.sleep(3)
         self.s.bind((ip,port))
         self.s.listen(100)
         print('Running on IP: '+ip)
@@ -29,7 +32,9 @@ class Cliente:
             print("Es un video")
         elif(caracter == "/x12"):
             print("Es un frame")
+            os.chdir(r"C:\Users\Alonso\OneDrive\Desktop\ProyectoFinalASD\Emily\Simple-Python-File-Transfer-Server-master\serverFrames")
             # change dir a /serverFrames
+            
         else:
             print("Ni es video ni es frame")
 
@@ -37,7 +42,7 @@ class Cliente:
             c.send("file-doesn't-exist".encode())
         else:
             c.send("file-exists".encode())
-            print('Sending',arch)
+            print('Sending ',arch)
             if arch != '':
                 file = open(arch,'rb')
                 arch = file.read(1024)

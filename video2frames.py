@@ -1,7 +1,9 @@
 import cv2
 import os
+
 #video_path= open('from_server video.mp4')
-cap = cv2.VideoCapture('from_server video.mp4')
+
+cap = cv2.VideoCapture('from_server_video.mp4')
 img_index = 0
 while (cap.isOpened()):
     ret, frame = cap.read()

@@ -31,9 +31,9 @@ class Servidor:
             if target_port=="8000":
                 #val=os.getcwd()
                 #print("RUTA DIRECTORIO 1 -*/-*/-*/-*/-*/   " + val)
-                write_name = 'from_server '+file_name
+                write_name = 'from_server_'+file_name
                 file_name = "/x11-" + file_name 
-                print("Nombre File_name " + file_name)
+                print("Nombre File_name_" + file_name)
 
             else:
                 write_name="./serverFrames/"+ file_name
